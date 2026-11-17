@@ -2,8 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>WSOP Dojo — Modular Poker App (Step 1: UI Fixes, SFX & Metrics)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="WSOP Dojo">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#071135">
+<link rel="apple-touch-icon" sizes="180x180" href="Assets/Avatars/app-icon.jpg">
+<link rel="icon" type="image/jpeg" href="Assets/Avatars/app-icon.jpg">
+<title>WSOP Dojo — Poker & Blackjack Advantage Simulator</title>
 <style>
   /* ==========================================================================
      MODULE 0: ISOLATED WSOP VISUAL THEME (wsop-ui.css) — OVERLAPS FIXED
@@ -1482,21 +1489,184 @@
   }
 
   /* ==========================================================================
-     IPAD & TABLET TOUCH ERGONOMICS (APPLE 44PX+ HIG COMPLIANCE)
+     IPAD & PHONE LANDSCAPE ERGONOMICS
      ========================================================================== */
   @media (pointer: coarse), (max-width: 1024px) {
     .icon-btn {
-      min-height: 42px;
-      padding: 8px 14px;
-      font-size: 13px;
+      min-height: 38px;
+      padding: 6px 11px;
+      font-size: 12px;
     }
     .wsop-btn {
-      min-height: 54px;
-      min-width: 120px;
-      font-size: 15px;
+      min-height: 48px;
+      min-width: 112px;
+      font-size: 14px;
     }
     .preset-pill, .bb-circle-btn {
-      min-height: 44px;
+      min-height: 42px;
+    }
+  }
+
+  /* Compact Phone Landscape (e.g. Nothing Phone 1 / iPhone in Landscape) */
+  @media (max-height: 520px) and (orientation: landscape) {
+    .wsop-topbar {
+      height: 36px;
+      padding: 0 10px;
+    }
+    .top-left-icons {
+      gap: 6px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .icon-btn {
+      min-height: 30px;
+      padding: 4px 8px;
+      font-size: 11px;
+    }
+    .left-sidebar {
+      display: none !important;
+    }
+    .table-arena {
+      padding: 8px 24px;
+    }
+    .oval-felt {
+      width: 78vw;
+      height: 58vh;
+      border-width: 10px;
+    }
+    .dealer-zone {
+      top: -46px;
+      transform: translateX(-50%) scale(0.82);
+    }
+    .center-board-wrap {
+      gap: 4px;
+      margin-top: 12px;
+      transform: scale(0.84);
+    }
+    .seat-node {
+      transform: scale(0.82);
+    }
+    .seat-pos-0 { bottom: -18%; left: 38%; transform: translateX(-50%) scale(0.85); }
+    .seat-pos-1 { bottom: 6%; left: -5%; }
+    .seat-pos-2 { top: 6%; left: -5%; }
+    .seat-pos-3 { top: -18%; left: 20%; }
+    .seat-pos-4 { top: -18%; right: 20%; }
+    .seat-pos-5 { bottom: 6%; right: -5%; }
+    .wsop-bottombar {
+      height: 56px;
+      padding: 0 12px 6px !important;
+    }
+    .wsop-btn {
+      min-height: 38px;
+      height: 38px;
+      width: 96px;
+      min-width: 96px;
+      font-size: 12px;
+    }
+    .last-hand-recap {
+      width: 190px;
+      padding: 4px 8px;
+      font-size: 10px;
+    }
+    .raise-drawer {
+      bottom: 54px;
+      height: 250px;
+      width: 200px;
+    }
+    .v-slider-input {
+      height: 155px;
+    }
+  }
+
+  /* Phone Portrait Rotate Lock Overlay (Only triggers on narrow portrait phones at a table) */
+  #portrait-rotate-lock {
+    display: none;
+  }
+  @media (max-width: 540px) and (orientation: portrait) {
+    body.in-table-mode #portrait-rotate-lock {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 35%, #10256b 0%, #050b24 90%);
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 28px;
+      gap: 16px;
+    }
+  }
+
+  /* VIP Lounge Makeover Styling */
+  .lounge-shell {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 18% 15%, rgba(59, 130, 246, 0.22) 0%, transparent 45%),
+      radial-gradient(circle at 85% 80%, rgba(245, 185, 66, 0.14) 0%, transparent 50%),
+      linear-gradient(160deg, #091336 0%, #04081a 100%);
+    z-index: 9990;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .lounge-hero-banner {
+    background: linear-gradient(135deg, rgba(16, 37, 107, 0.85) 0%, rgba(7, 17, 53, 0.95) 100%);
+    border: 1.5px solid rgba(245, 185, 66, 0.45);
+    border-radius: 18px;
+    padding: 18px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.65);
+  }
+
+  .lounge-brand-cluster {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .lounge-app-badge {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    border: 2px solid var(--gold-accent);
+    object-fit: cover;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
+  }
+
+  .lounge-stat-card {
+    background: linear-gradient(180deg, rgba(13, 30, 78, 0.85) 0%, rgba(6, 14, 38, 0.95) 100%);
+    border: 1.5px solid #1e3a8a;
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  }
+
+  .lounge-game-card {
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .lounge-game-card:hover {
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 680px) {
+    .lounge-responsive-2col {
+      grid-template-columns: 1fr !important;
     }
   }
 
@@ -1888,115 +2058,138 @@
   </div>
 </div>
 
+<!-- PHONE PORTRAIT ROTATE LOCK OVERLAY -->
+<div id="portrait-rotate-lock">
+  <div style="font-size:48px;">📱↻</div>
+  <h2 style="font-size:20px; font-weight:900; color:#fde047; letter-spacing:0.6px;">ROTATE TO LANDSCAPE</h2>
+  <p style="font-size:13px; color:#cbd5e1; max-width:300px; line-height:1.5;">Turn your phone sideways for the full 6-Max Poker & Blackjack casino table view.</p>
+  <button class="icon-btn" style="margin-top:8px;" onclick="DojoHomepage.open()">← Back to Dojo Lounge</button>
+</div>
+
 <!-- ==========================================================================
-     FULL-SCREEN HOMEPAGE (DOJO LOUNGE)
+     FULL-SCREEN HOMEPAGE (VIP DOJO LOUNGE)
      ========================================================================== -->
-<div id="dojo-homepage" style="position:fixed; inset:0; background:radial-gradient(circle at 50% 30%, #11266e 0%, #060e29 85%); z-index:9990; display:flex; flex-direction:column; padding:24px; overflow-y:auto;">
-  <div style="max-width:960px; width:100%; margin:0 auto; display:flex; flex-direction:column; gap:20px;">
+<div id="dojo-homepage" class="lounge-shell">
+  <div style="max-width:980px; width:100%; margin:0 auto; display:flex; flex-direction:column; gap:18px;">
     
-    <!-- Homepage Header -->
-    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1.5px solid #2563eb; padding-bottom:16px;">
-      <div>
-        <h1 style="font-size:26px; font-weight:900; color:#fde047; letter-spacing:1px; margin:0;">♠ WSOP POKER DOJO</h1>
-        <p style="font-size:12px; color:#93c5fd; margin:4px 0 0 0;">High-Leverage Strategic Training Ground & Decision Simulator</p>
+    <!-- VIP Branded Header -->
+    <div class="lounge-hero-banner">
+      <div class="lounge-brand-cluster">
+        <img src="Assets/Avatars/app-icon.jpg" alt="WSOP Dojo" class="lounge-app-badge" onerror="this.style.display='none'">
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <h1 style="font-size:24px; font-weight:900; color:#fde047; letter-spacing:0.8px; margin:0;">WSOP DOJO</h1>
+            <span style="background:rgba(245,185,66,0.18); border:1px solid var(--gold-accent); color:#fde047; font-size:9.5px; font-weight:900; padding:2px 8px; border-radius:10px;">GTO & EXPLOIT LAB</span>
+          </div>
+          <p style="font-size:12px; color:#93c5fd; margin:4px 0 0 0;">Adaptive AI Archetype Simulator • True Skill EV • Advantage Blackjack</p>
+        </div>
       </div>
-      <div style="display:flex; gap:10px;">
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button class="icon-btn" onclick="DojoLedger.open('poker')">📜 Round Ledger</button>
         <button class="icon-btn" onclick="DojoSettings.open()">⚙️ Settings</button>
-        <button class="wsop-btn btn-confirm-green" style="width:160px; height:44px; font-size:14px;" onclick="DojoHomepage.goToTable()">Enter Table ➔</button>
+        <button class="wsop-btn btn-confirm-green" style="width:152px; height:44px; font-size:13.5px;" onclick="DojoHomepage.goToTable()">Quick Seat ➔</button>
       </div>
     </div>
 
-    <!-- Quick Lifetime Telemetry & Accumulation Tracker -->
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px;">
-     <div onclick="BankrollAnalytics.open()" style="background:#091942; border:1.5px solid #22c55e; border-radius:12px; padding:12px 16px; cursor:pointer; transition:transform 0.15s, border-color 0.2s;" onmouseover="this.style.borderColor='#4ade80'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='#22c55e'; this.style.transform='translateY(0)';" title="Click to view detailed P&L breakdown graph">
+    <!-- Lifetime Telemetry Strip -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px;">
+      <div class="lounge-stat-card" onclick="BankrollAnalytics.open()" style="border-color:#22c55e; cursor:pointer;" title="Click to view detailed P&L chart">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:11px; color:#94a3b8; font-weight:800; text-transform:uppercase;">Vault Bankroll</span>
-          <span id="home-bankroll-trend" style="font-size:10px; font-weight:900; color:#4ade80;">READY</span>
+          <span style="font-size:10.5px; color:#94a3b8; font-weight:800; text-transform:uppercase;">Vault Bankroll</span>
+          <span id="home-bankroll-trend" style="font-size:9.5px; font-weight:900; color:#4ade80;">READY</span>
         </div>
         <div id="home-stat-bankroll" style="font-size:24px; font-weight:900; color:#4ade80; font-family:monospace; margin-top:4px;">$10,000</div>
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
           <span style="font-size:10px; color:#64748b;" id="home-stat-peak">Peak: $10,000</span>
-          <span style="font-size:9.5px; color:#38bdf8; font-weight:800;">📊 View Chart ➔</span>
+          <span style="font-size:10px; color:#38bdf8; font-weight:800;">📈 P&L Graph ➔</span>
         </div>
       </div>
-      <div style="background:#091942; border:1.5px solid #1e3a8a; border-radius:12px; padding:12px 16px;">
-        <span style="font-size:11px; color:#94a3b8; font-weight:800; text-transform:uppercase;">Net Accumulation</span>
+      <div class="lounge-stat-card">
+        <span style="font-size:10.5px; color:#94a3b8; font-weight:800; text-transform:uppercase;">Net Accumulation</span>
         <div id="home-stat-net-acc" style="font-size:24px; font-weight:900; color:#38bdf8; font-family:monospace; margin-top:4px;">+$0</div>
-        <div style="font-size:10px; color:#64748b; margin-top:2px;">Across all games</div>
+        <div style="font-size:10px; color:#64748b; margin-top:4px;">Combined Poker & Blackjack</div>
       </div>
-      <div style="background:#091942; border:1.5px solid #1e3a8a; border-radius:12px; padding:12px 16px;">
-        <span style="font-size:11px; color:#94a3b8; font-weight:800; text-transform:uppercase;">Poker True Skill EV</span>
+      <div class="lounge-stat-card">
+        <span style="font-size:10.5px; color:#94a3b8; font-weight:800; text-transform:uppercase;">Poker True Skill EV</span>
         <div id="home-stat-skillev" style="font-size:24px; font-weight:900; color:#fde047; font-family:monospace; margin-top:4px;">+$0.0</div>
-        <div style="font-size:10px; color:#64748b; margin-top:2px;">Pure decision math</div>
+        <div style="font-size:10px; color:#64748b; margin-top:4px;">Variance-free decision math</div>
       </div>
-      <div style="background:#091942; border:1.5px solid #1e3a8a; border-radius:12px; padding:12px 16px;">
-        <span style="font-size:11px; color:#94a3b8; font-weight:800; text-transform:uppercase;">Poker Hands Logged</span>
-        <div id="home-stat-hands" style="font-size:24px; font-weight:900; color:#cbd5e1; font-family:monospace; margin-top:4px;">#0</div>
-        <div style="font-size:10px; color:#64748b; margin-top:2px;">Recorded rounds</div>
-      </div>
-    </div>
-<!-- Game Selection Banner: Poker vs Blackjack -->
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-      <div style="background:linear-gradient(135deg, #10256b 0%, #081640 100%); border:2px solid #3b82f6; border-radius:14px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; gap:10px;">
-        <div>
-          <span style="font-size:10px; color:#93c5fd; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">NO-LIMIT TEXAS HOLD'EM</span>
-          <h2 style="font-size:18px; color:#fff; font-weight:900; margin:2px 0;">WSOP Poker Dojo</h2>
-          <p style="font-size:11px; color:#cbd5e1; margin-top:4px;">Practice against adaptive DNA bots, True Skill EV, and positional dynamics.</p>
-        </div>
-        <button class="wsop-btn btn-confirm-green" style="width:100%; height:40px; font-size:13px;" onclick="DojoHomepage.goToTable()">Open Poker Table ➔</button>
-      </div>
-
-      <div style="background:linear-gradient(135deg, #064e3b 0%, #022c22 100%); border:2px solid #10b981; border-radius:14px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; gap:10px;">
-        <div>
-          <span style="font-size:10px; color:#6ee7b7; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">ADVANTAGE PLAY SIMULATOR</span>
-          <h2 style="font-size:18px; color:#34d399; font-weight:900; margin:2px 0;">Blackjack Arena</h2>
-          <p style="font-size:11px; color:#cbd5e1; margin-top:4px;">Realistic shoe, Split, Double Down, and real-time Basic Strategy lookup.</p>
-        </div>
-        <button class="wsop-btn" style="width:100%; height:40px; font-size:13px; background:linear-gradient(180deg, #059669 0%, #064e3b 100%); border-color:#34d399;" onclick="BlackjackUI.openTable()">Play Blackjack ➔</button>
-      </div>
-    </div>
-    <!-- Training Scenarios & Position Hub -->
-    <div style="background:rgba(10, 25, 70, 0.75); border:1.5px solid #2563eb; border-radius:14px; padding:18px; display:flex; flex-direction:column; gap:14px;">
-      <h3 style="font-size:15px; color:#f8fafc; font-weight:900;">🎯 Drill Setup & Positional Targeting</h3>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
-        <div>
-          <label style="font-size:11px; color:#93c5fd; font-weight:800; display:block; margin-bottom:6px;">LOCKED HERO POSITION</label>
-          <select id="home-pos-select" style="width:100%; padding:10px; background:#04091a; border:1.5px solid #1e3a8a; color:#fff; border-radius:8px; font-weight:700; outline:none;">
-            <option value="random">Dynamic Rotation (Casino Standard)</option>
-            <option value="0">Dealer Button (BTN) — Positional Dominance</option>
-            <option value="5">Cutoff (CO) — Late Position Steals</option>
-            <option value="4">Hijack (HJ) — Mid-Late Position</option>
-            <option value="3">Under The Gun (UTG) — Tight Discipline</option>
-            <option value="2">Big Blind (BB) — Defense Math</option>
-            <option value="1">Small Blind (SB) — Out-of-Position Pressure</option>
-          </select>
-        </div>
-        <div>
-          <label style="font-size:11px; color:#93c5fd; font-weight:800; display:block; margin-bottom:6px;">STACK SCENARIO</label>
-          <select id="home-scenario-select" style="width:100%; padding:10px; background:#04091a; border:1.5px solid #1e3a8a; color:#fff; border-radius:8px; font-weight:700; outline:none;">
-            <option value="200">Deep-Stack Cash (100 BB — Full Postflop Play)</option>
-            <option value="40">Short-Stack Tournament (20 BB — Push/Fold Math)</option>
-            <option value="100">Medium Stack (50 BB — 3-Bet & SPR Control)</option>
-          </select>
-        </div>
+      <div class="lounge-stat-card">
+        <span style="font-size:10.5px; color:#94a3b8; font-weight:800; text-transform:uppercase;">Hands Completed</span>
+        <div id="home-stat-hands" style="font-size:24px; font-weight:900; color:#e2e8f0; font-family:monospace; margin-top:4px;">#0</div>
+        <div style="font-size:10px; color:#64748b; margin-top:4px;">Click any table seat for DNA</div>
       </div>
     </div>
 
-    <!-- Interactive Chill & Learn: Pot Odds Calculation Gym -->
-    <div style="background:rgba(6, 17, 53, 0.9); border:1.5px solid #10b981; border-radius:14px; padding:18px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <!-- Primary Game Arenas: Poker vs Blackjack -->
+    <div class="lounge-responsive-2col" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+      <div class="lounge-game-card" style="background:linear-gradient(145deg, #122b7a 0%, #071338 100%); border:2px solid #3b82f6;">
         <div>
-          <h3 style="font-size:15px; color:#34d399; font-weight:900;">🧠 Pot Odds & Equity Calculation Gym</h3>
-          <p style="font-size:11px; color:#94a3b8; margin-top:2px;">Sharpen your mental arithmetic without risking table chips.</p>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:10px; color:#93c5fd; font-weight:900; text-transform:uppercase; letter-spacing:0.6px;">♠ 6-MAX NO-LIMIT HOLD'EM</span>
+            <span style="font-size:10px; color:#fde047; font-weight:800;">15 DNA BOTS</span>
+          </div>
+          <h2 style="font-size:20px; color:#fff; font-weight:900; margin:4px 0;">WSOP Poker Arena</h2>
+          <p style="font-size:11.5px; color:#cbd5e1; line-height:1.45;">Battle Calling Stations, Nits, Maniacs, Trappers, and adaptive Solver Pros with live equity & range diagnostics.</p>
         </div>
-        <button class="icon-btn" onclick="DojoHomepage.generateQuiz()">New Math Problem</button>
+        <button class="wsop-btn btn-confirm-green" style="width:100%; height:44px; font-size:13.5px;" onclick="DojoHomepage.goToTable()">Launch Poker Table ➔</button>
       </div>
-      <div id="gym-problem-box" style="background:#020617; border:1px solid #1e293b; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:10px;">
-        <span id="gym-scenario-desc" style="font-size:13px; color:#e2e8f0; font-weight:700;">Loading mental drill...</span>
-        <div style="display:flex; gap:10px; align-items:center;">
-          <input type="number" id="gym-user-guess" placeholder="Your required %" style="width:140px; padding:8px 12px; background:#0f172a; border:1.5px solid #3b82f6; border-radius:6px; color:#fff; font-weight:900; outline:none;">
-          <button class="wsop-btn" style="width:120px; height:38px; font-size:12px;" onclick="DojoHomepage.checkQuiz()">Test Math</button>
-          <span id="gym-result-text" style="font-size:12px; font-weight:800;"></span>
+
+      <div class="lounge-game-card" style="background:linear-gradient(145deg, #065f46 0%, #022c22 100%); border:2px solid #10b981;">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:10px; color:#6ee7b7; font-weight:900; text-transform:uppercase; letter-spacing:0.6px;">♣ VEGAS SHOE SIMULATOR</span>
+            <span style="font-size:10px; color:#fde047; font-weight:800;">HI-LO + 21+3</span>
+          </div>
+          <h2 style="font-size:20px; color:#34d399; font-weight:900; margin:4px 0;">Advantage Blackjack</h2>
+          <p style="font-size:11.5px; color:#cbd5e1; line-height:1.45;">Multi-spot shoe play with Running/True Count HUD, Basic Strategy deviation alerts, Perfect Pairs, and 21+3.</p>
+        </div>
+        <button class="wsop-btn" style="width:100%; height:44px; font-size:13.5px; background:linear-gradient(180deg, #059669 0%, #064e3b 100%); border-color:#34d399;" onclick="BlackjackUI.openTable()">Launch Blackjack ➔</button>
+      </div>
+    </div>
+
+    <!-- Bottom Row: Seat/Stack Config + Mental Math Gym -->
+    <div class="lounge-responsive-2col" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+      <!-- Training Scenarios & Position Hub -->
+      <div class="lounge-stat-card" style="border-color:#2563eb; display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+        <h3 style="font-size:14.5px; color:#f8fafc; font-weight:900;">🎯 Table Seat & Stack Setup</h3>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div>
+            <label style="font-size:10.5px; color:#93c5fd; font-weight:800; display:block; margin-bottom:4px;">LOCKED HERO POSITION</label>
+            <select id="home-pos-select" style="width:100%; padding:9px 10px; background:#04091a; border:1.5px solid #1e3a8a; color:#fff; border-radius:8px; font-weight:700; font-size:12.5px; outline:none;">
+              <option value="random">Dynamic Rotation (Casino Standard)</option>
+              <option value="0">Dealer Button (BTN) — Positional Dominance</option>
+              <option value="5">Cutoff (CO) — Late Position Steals</option>
+              <option value="4">Hijack (HJ) — Mid-Late Position</option>
+              <option value="3">Under The Gun (UTG) — Tight Discipline</option>
+              <option value="2">Big Blind (BB) — Defense Math</option>
+              <option value="1">Small Blind (SB) — Out-of-Position Pressure</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:10.5px; color:#93c5fd; font-weight:800; display:block; margin-bottom:4px;">STACK DEPTH SCENARIO</label>
+            <select id="home-scenario-select" style="width:100%; padding:9px 10px; background:#04091a; border:1.5px solid #1e3a8a; color:#fff; border-radius:8px; font-weight:700; font-size:12.5px; outline:none;">
+              <option value="200">Deep-Stack Cash (100 BB — Full Postflop Play)</option>
+              <option value="100">Medium Stack (50 BB — 3-Bet & SPR Control)</option>
+              <option value="40">Short-Stack Tournament (20 BB — Push/Fold Math)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Chill & Learn: Pot Odds Calculation Gym -->
+      <div class="lounge-stat-card" style="border-color:#10b981; display:flex; flex-direction:column; justify-content:space-between; gap:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h3 style="font-size:14.5px; color:#34d399; font-weight:900;">🧠 Pot Odds & Outs Gym</h3>
+          <button class="icon-btn" style="min-height:30px; padding:4px 10px; font-size:11px;" onclick="DojoHomepage.generateQuiz()">↻ New Drill</button>
+        </div>
+        <div id="gym-problem-box" style="background:#020617; border:1px solid #1e293b; border-radius:10px; padding:12px; display:flex; flex-direction:column; gap:8px;">
+          <span id="gym-scenario-desc" style="font-size:12px; color:#e2e8f0; font-weight:700; line-height:1.4;">Loading mental drill...</span>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <input type="number" id="gym-user-guess" placeholder="Enter %" onkeydown="if(event.key==='Enter') DojoHomepage.checkQuiz()" style="width:105px; padding:7px 10px; background:#0f172a; border:1.5px solid #3b82f6; border-radius:6px; color:#fff; font-weight:900; font-size:13px; outline:none;">
+            <button class="wsop-btn" style="width:105px; height:34px; min-height:34px; font-size:11.5px;" onclick="DojoHomepage.checkQuiz()">Test Math</button>
+            <span id="gym-result-text" style="font-size:11.5px; font-weight:800;"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -3106,63 +3299,110 @@ const PokerEngine = (() => {
     const S = StateCheckpoint.state;
     const toCall = Math.max(0, S.currentBet - bot.streetBet);
     const evalNow = evaluateHand([...bot.hole, ...S.board]);
+    const dna = bot.liveDNA || { L: bot.vpip || 0.35, A: bot.agg || 0.5, S: bot.sticky || 0.6, D: 0.3 };
 
-    const posOffset = (bot.id - S.btnIdx + 6) % 6; 
-    const posL = {0: 1.4, 1: 0.85, 2: 1.0, 3: 0.5, 4: 0.8, 5: 1.15}[posOffset];
-    const posA = {0: 1.3, 1: 0.7, 2: 0.9, 3: 0.6, 4: 0.9, 5: 1.2}[posOffset];
-    
-    const effVPIP = Math.min(0.95, bot.vpip * posL);
-    const effAgg = Math.min(0.95, bot.agg * posA);
+    const posOffset = (bot.id - S.btnIdx + 6) % 6;
+    const posL = { 0: 1.35, 1: 0.85, 2: 1.0, 3: 0.55, 4: 0.8, 5: 1.15 }[posOffset];
+    const posA = { 0: 1.25, 1: 0.75, 2: 0.9, 3: 0.65, 4: 0.9, 5: 1.15 }[posOffset];
+
+    const effL = Math.min(0.96, dna.L * posL);
+    const effA = Math.min(0.96, dna.A * posA);
+    const effS = dna.S;
+    const effD = dna.D;
 
     if (S.street === 'PREFLOP') {
       const hi = Math.max(bot.hole[0].rank, bot.hole[1].rank);
       const lo = Math.min(bot.hole[0].rank, bot.hole[1].rank);
       const isPair = bot.hole[0].rank === bot.hole[1].rank;
+      const isSuited = bot.hole[0].suit === bot.hole[1].suit;
+      const isConnected = (hi - lo) === 1;
       const isPremium = (isPair && hi >= 10) || (hi === 14 && lo >= 11);
-      const isMonster = (isPair && hi >= 12) || (hi === 14 && lo === 13); // QQ, KK, AA, AK
+      const isMonster = (isPair && hi >= 12) || (hi === 14 && lo === 13);
+
+      // Hand strength score normalized 0.0 -> 1.0
+      const handScore = Math.min(1, ((hi + lo * 0.6 + (isPair ? 10 : 0) + (isSuited ? 2.5 : 0) + (isConnected ? 1.5 : 0)) - 7) / 25);
 
       if (toCall === 0) {
-        commitPlayerMove(bot, 'check', 0);
+        if ((isPremium || (handScore > (1 - effL) && Math.random() < effA)) && bot.stack > 4) {
+          commitPlayerMove(bot, 'raise', Math.min(bot.stack + bot.streetBet, S.currentBet + 4));
+        } else {
+          commitPlayerMove(bot, 'check', 0);
+        }
       } else if (toCall >= bot.stack * 0.45) {
-        // Prevent all-in cheese: snap-call with monsters or strong pairs
-        if (isMonster || (isPremium && Math.random() < bot.sticky) || (bot.sticky >= 0.80 && isPair)) {
+        if (isMonster || (isPremium && Math.random() < effS) || (effS >= 0.85 && isPair && hi >= 8)) {
           commitPlayerMove(bot, 'call', toCall);
         } else {
           commitPlayerMove(bot, 'fold', 0);
         }
       } else {
-        const playHand = isPair || hi >= 11 || Math.random() < effVPIP;
-        if (playHand) {
-          if (isMonster && Math.random() < effAgg) {
-            const shoveAmt = Math.min(bot.stack + bot.streetBet, S.currentBet > 0 ? S.currentBet * 3 : 12);
-            commitPlayerMove(bot, 'raise', shoveAmt);
-          } else if (isPair && hi >= 9 && S.currentBet <= 8 && Math.random() < effAgg) {
-            commitPlayerMove(bot, 'raise', Math.min(bot.stack + bot.streetBet, S.currentBet + 6));
-          } else {
-            commitPlayerMove(bot, 'call', toCall);
-          }
-        } else {
+        const wantsToPlay = isMonster || isPremium || (handScore >= (1 - effL));
+        if (!wantsToPlay) {
           commitPlayerMove(bot, 'fold', 0);
+          return;
+        }
+        // 3-Bet / Iso-Raise logic driven by Aggression (A) and Deception (D)
+        const light3Bet = (isSuited && (isConnected || hi === 14)) && Math.random() < (effA * effD * 0.85);
+        if ((isMonster || (isPremium && Math.random() < effA) || light3Bet) && S.currentBet <= 18) {
+          const raiseSize = Math.min(bot.stack + bot.streetBet, Math.max(S.currentBet * 3, S.currentBet + 6));
+          commitPlayerMove(bot, 'raise', raiseSize);
+        } else {
+          commitPlayerMove(bot, 'call', toCall);
         }
       }
     } else {
+      // POSTFLOP ENGINE: Archetype-driven Value, Slow-Playing, Floating & Bluffing
+      const maxBoard = Math.max(...S.board.map(c => c.rank));
+      const hasTopPairOrBetter = evalNow.cat >= 2 || (evalNow.cat === 1 && bot.hole.some(c => c.rank >= maxBoard));
+      const hasAnyPairOrDraw = evalNow.cat >= 1 || (S.board.length < 5 && (bot.hole[0].rank > maxBoard && bot.hole[1].rank > maxBoard));
+      const potOddsNeeded = toCall > 0 ? (toCall / (S.pot + toCall)) : 0;
+
+      // Trappers (Chloe: high D + high S + moderate L) slow-play monsters on Flop/Turn
+      const shouldSlowPlay = (evalNow.cat >= 3 && S.street !== 'RIVER' && effD >= 0.65 && Math.random() < 0.55);
+
       if (toCall === 0) {
-        if (evalNow.cat >= 1 && Math.random() < effAgg * 0.7) {
-          const betAmt = Math.min(bot.stack, Math.max(2, Math.round(S.pot * 0.55)));
+        if (shouldSlowPlay) {
+          commitPlayerMove(bot, 'check', 0);
+          return;
+        }
+        // Value bet with strong hands (scaled by Aggression A)
+        if (hasTopPairOrBetter && Math.random() < (0.35 + effA * 0.60)) {
+          const mult = effA >= 0.75 ? 0.75 : effA <= 0.30 ? 0.35 : 0.55;
+          const betAmt = Math.min(bot.stack, Math.max(2, Math.round(S.pot * mult)));
           commitPlayerMove(bot, 'raise', betAmt);
+        } else if (!hasAnyPairOrDraw && Math.random() < (effD * effA * 0.65)) {
+          // Pure Bluff / C-Bet with air driven by Deception (D) * Aggression (A)
+          const bluffMult = effD >= 0.75 ? 0.80 : 0.50;
+          const bluffAmt = Math.min(bot.stack, Math.max(2, Math.round(S.pot * bluffMult)));
+          commitPlayerMove(bot, 'raise', bluffAmt);
         } else {
           commitPlayerMove(bot, 'check', 0);
         }
       } else {
-        const isAllInBet = toCall >= bot.stack * 0.55;
-        if (isAllInBet) {
-          if (evalNow.cat >= 2 || (evalNow.cat === 1 && Math.random() < bot.sticky)) {
-            commitPlayerMove(bot, 'call', toCall);
+        const isBigOverbet = toCall > S.pot * 0.90 || toCall >= bot.stack * 0.50;
+        if (isBigOverbet) {
+          if (evalNow.cat >= 2 || (hasTopPairOrBetter && Math.random() < effS * 0.75)) {
+            if (evalNow.cat >= 3 && Math.random() < effA) {
+              commitPlayerMove(bot, 'raise', bot.stack + bot.streetBet);
+            } else {
+              commitPlayerMove(bot, 'call', toCall);
+            }
           } else {
             commitPlayerMove(bot, 'fold', 0);
           }
         } else {
-          if (evalNow.cat >= 1 || (toCall <= S.pot * 0.85 && Math.random() < bot.sticky)) {
+          // Check-Raise / Value-Raise with strong made hands
+          if (evalNow.cat >= 2 && !shouldSlowPlay && Math.random() < effA * 0.65) {
+            const raiseAmt = Math.min(bot.stack + bot.streetBet, S.currentBet * 2 + Math.round(S.pot * 0.5));
+            commitPlayerMove(bot, 'raise', raiseAmt);
+          } else if (hasTopPairOrBetter) {
+            commitPlayerMove(bot, 'call', toCall);
+          } else if (hasAnyPairOrDraw && (Math.random() < effS || potOddsNeeded <= 0.28)) {
+            // Sticky stations (Mark, Dave, Raj) call down weak pairs/draws
+            commitPlayerMove(bot, 'call', toCall);
+          } else if (S.street === 'FLOP' && effD >= 0.60 && effS >= 0.60 && potOddsNeeded <= 0.35 && Math.random() < effD * 0.6) {
+            // Float specialists (Mateo) float flop c-bets in position to steal later
+            commitPlayerMove(bot, 'call', toCall);
+          } else if (potOddsNeeded <= 0.22 && Math.random() < effS * 0.5) {
             commitPlayerMove(bot, 'call', toCall);
           } else {
             commitPlayerMove(bot, 'fold', 0);
@@ -4228,9 +4468,15 @@ const PlayerDossier = (() => {
 
       if (!p.isHero) {
         const alpha = p.baseDNA.alpha || 0.20;
-        const heroPressure = (hero.liveDNA.L + hero.liveDNA.A) / 2;
-        p.liveDNA.S = clamp01(p.liveDNA.S * (1 - alpha * 0.25) + heroPressure * (alpha * 0.25));
-        p.liveDNA.A = clamp01(p.liveDNA.A * (1 - alpha * 0.15) + (1 - hero.liveDNA.S) * (alpha * 0.15));
+        const heroPressure = (hero.liveDNA.L + hero.liveDNA.A + hero.liveDNA.D) / 3;
+        // High-alpha pros (Kenji, Elena, Chloe) counter-exploit Hero's actual tendencies:
+        // 1. If Hero bluffs/attacks often -> Bot increases Suspicion (S) to bluff-catch lighter
+        p.liveDNA.S = clamp01(p.liveDNA.S * (1 - alpha * 0.30) + Math.min(0.95, heroPressure * 1.25) * (alpha * 0.30));
+        // 2. If Hero over-folds (low S) -> Bot increases Aggression (A) & Deception (D) to steal pots
+        p.liveDNA.A = clamp01(p.liveDNA.A * (1 - alpha * 0.25) + (1 - hero.liveDNA.S) * (alpha * 0.25));
+        p.liveDNA.D = clamp01(p.liveDNA.D * (1 - alpha * 0.20) + (1 - hero.liveDNA.S) * (alpha * 0.20));
+        // 3. Elastic mean-reversion toward GTO baseline so elite pros don't stay over-exposed
+        p.liveDNA.L = clamp01(p.liveDNA.L * 0.92 + p.baseDNA.L * 0.08);
       }
 
       p.scaleHistory.push({
@@ -4896,7 +5142,22 @@ const DojoLedger = (() => {
 const DojoHomepage = (() => {
   let activeQuizOdds = 25;
 
+  function lockLandscapeIfPossible() {
+    document.body.classList.add('in-table-mode');
+    if (screen.orientation && screen.orientation.lock) {
+      screen.orientation.lock('landscape').catch(() => {});
+    }
+  }
+
+  function unlockLandscape() {
+    document.body.classList.remove('in-table-mode');
+    if (screen.orientation && screen.orientation.unlock) {
+      try { screen.orientation.unlock(); } catch (e) {}
+    }
+  }
+
   function open() {
+    unlockLandscape();
     updateTelemetry();
     generateQuiz();
     document.getElementById('dojo-homepage').style.display = 'flex';
@@ -4923,6 +5184,7 @@ const DojoHomepage = (() => {
     S.players.forEach(p => p.stack = buyIn);
 
     document.getElementById('dojo-homepage').style.display = 'none';
+    lockLandscapeIfPossible();
     PokerEngine.startNewHand();
   }
 
@@ -5570,6 +5832,10 @@ const BlackjackUI = (() => {
   function openTable() {
     document.getElementById('dojo-homepage').style.display = 'none';
     document.getElementById('bj-table-screen').style.display = 'flex';
+    document.body.classList.add('in-table-mode');
+    if (screen.orientation && screen.orientation.lock) {
+      screen.orientation.lock('landscape').catch(() => {});
+    }
     render();
   }
 
